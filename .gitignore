@@ -16,3 +16,7 @@ node_modules/
 dist/
 *.tgz
 *.log
+
+server/prisma/*.db
+server/prisma/*.db-journal
+
