@@ -1,0 +1,38 @@
+# ECNA Testnet — Geth Clique PoA, chain ID 4112 (isolated from mainnet ports).
+# RPC 18545 | WS 18546 | P2P 30313 — does not conflict with mainnet 8545/30303.
+
+services:
+  ecna-testnet-validator:
+    image: ethereum/client-go:v1.13.15
+    container_name: ecna-testnet-validator
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      # RPC/WS localhost only — public HTTPS goes through rpc-public-guard + nginx
+      - "127.0.0.1:18545:8545"
+      - "127.0.0.1:18546:8546"
+      - "30313:30303"
+      - "30313:30303/udp"
+    volumes:
+      - ./genesis.json:/genesis.json:ro
+      - ./data/validator1:/data
+      - ./docker/geth-entrypoint.sh:/entrypoint.sh:ro
+      - ./docker/password-dev.txt:/secrets/password.txt:ro
+      - ./docker/miner-private.hex:/secrets/miner-private.hex:ro
+    environment:
+      GENESIS_PATH: /genesis.json
+      GETH_DATADIR: /data
+      NETWORK_ID: "4112"
+      HTTP_PORT: "8545"
+      WS_PORT: "8546"
+      P2P_PORT: "30303"
+      # Clique requires etherbase = unlocked signer account (keystore). Drain prevented by localhost RPC + rpc-public-guard.
+      MINER_ETHERBASE: ${ECNA_PRIMARY_ADDRESS}
+      UNLOCK_ACCOUNT: ${ECNA_PRIMARY_ADDRESS}
+      PASSWORD_FILE: /secrets/password.txt
+      HTTP_API: eth,net,web3,txpool
+      HTTP_VHOSTS: localhost,127.0.0.1
+
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []

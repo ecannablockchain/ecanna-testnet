@@ -1,0 +1,18 @@
+﻿# Secrets — never commit
+**/.env
+!**/.env.example
+!**/.env.testnet.example
+**/*.hex
+!**/*.hex.example
+**/password-dev.txt
+**/jwt.hex
+**/data/
+**/backups/
+scripts/*credentials.local*
+scripts/*.local.md
+scripts/*.local.json
+
+node_modules/
+dist/
+*.tgz
+*.log
