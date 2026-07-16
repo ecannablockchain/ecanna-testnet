@@ -1,0 +1,15 @@
+{
+  "chainId": "0x1010",
+  "chainName": "E Canna Testnet",
+  "nativeCurrency": {
+    "name": "E Canna Testnet",
+    "symbol": "tECNA",
+    "decimals": 18
+  },
+  "rpcUrls": [
+    "https://testnetrpc.ecnascan.com"
+  ],
+  "blockExplorerUrls": [
+    "https://testnetexplorer.ecnascan.com"
+  ]
+}
