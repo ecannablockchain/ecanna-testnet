@@ -17,11 +17,12 @@ CLI: GitHub CLI (`gh`) is used on the laptop; login via PAT stored in the gitign
 | Repo | Visibility | URL | Contents (sanitized) |
 |------|------------|-----|----------------------|
 | **ecanna-mainnet** | **Public** | https://github.com/ecannablockchain/ecanna-mainnet | Mainnet chain 4111 + explorer/API apps; no `.env` / keys |
-| **ecanna-testnet** | Private | https://github.com/ecannablockchain/ecanna-testnet | Testnet chain 4112 + faucet/explorer/API; no `.env` / keys |
+| **ecanna-testnet** | **Public** | https://github.com/ecannablockchain/ecanna-testnet | Testnet chain 4112 + faucet/explorer/API; no `.env` / keys |
 
-**Exchange listing pack (mainnet):** [`docs/EXCHANGE-LISTING.md`](./EXCHANGE-LISTING.md) · genesis + `static-nodes.json` + Geth `v1.13.15` + peer enode.
-
-**Later make testnet public:** GitHub → repo → **Settings** → Danger zone → **Change visibility** → Public.
+**Exchange listing packs:**  
+- Mainnet → [`docs/EXCHANGE-LISTING.md`](./EXCHANGE-LISTING.md)  
+- Testnet → [`docs/EXCHANGE-LISTING-TESTNET.md`](./EXCHANGE-LISTING-TESTNET.md)  
+(genesis + `static-nodes.json` + Geth `v1.13.15` + peer enode; public `*.ecnascan.com` URLs only — no obsolete host IPs)
 
 **Never push:** `.env`, `miner-private.hex`, `faucet-private.hex`, `password-dev.txt`, SSH/SQL passwords, GitHub PAT, `scripts/*credentials.local*`.
 

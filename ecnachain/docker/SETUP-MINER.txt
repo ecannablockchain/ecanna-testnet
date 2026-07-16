@@ -1,0 +1,18 @@
+Single-address Clique setup (use the same address everywhere you intend):
+
+- ecnachain/.env: ECNA_PRIMARY_ADDRESS = that address
+
+- server/.env: same ECNA_PRIMARY_ADDRESS (treasury + explorer “miner” label)
+
+- genesis.json: extraData signer + coinbase + alloc = that address (changing genesis requires a fresh datadir)
+
+- docker/miner-private.hex: raw private key for that address (64 hex chars, no 0x) — sealing will not work without it
+  (replace any placeholder key so it matches the genesis signer, or seals will not match)
+
+- Funds (native): block rewards + fees go to MINER_ETHERBASE (compose = ECNA_PRIMARY_ADDRESS). User transfer amounts always go to the tx “To” address.
+
+- New address: update coinbase + alloc + extraData signer in genesis. Clique extraData order: 32-byte vanity + 20-byte signer + 65-byte seal (zeros) — see geth (extraVanity + signers + extraSeal). Wrong layout → “unauthorized signer”. Then run `.\reset-chain.ps1` or wipe geth + keystore.
+
+- No blocks / no funds: (1) no leading spaces in miner-private.hex — exactly 64 hex. (2) Bad prior import: stop the container, delete `data/validator1/keystore` and `data/validator1/geth`, then `docker compose up` (fresh import + init).
+
+- Most common issue: old chain data still running after editing genesis.json. From `ecnachain/`: run `.\reset-chain.ps1` — then in MetaMask use RPC `https://rpc.ecnascan.com`, Chain ID `4111`, and your funded address to see the genesis alloc balance.

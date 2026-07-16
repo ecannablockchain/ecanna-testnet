@@ -116,8 +116,8 @@ Full write-up: **[`docs/GITHUB-AND-CHAINLIST.md`](docs/GITHUB-AND-CHAINLIST.md)*
 | Item | Value |
 |------|--------|
 | GitHub user | **ecannablockchain** |
-| Private mainnet code | https://github.com/ecannablockchain/ecanna-mainnet |
-| Private testnet code | https://github.com/ecannablockchain/ecanna-testnet |
+| Private mainnet code | https://github.com/ecannablockchain/ecanna-mainnet (**public**) |
+| Private testnet code | https://github.com/ecannablockchain/ecanna-testnet (**public**) |
 | Chainlist.org PR | https://github.com/DefiLlama/chainlist/pull/2935 (**merged** — 4111 + 4112 live) |
 | ethereum-lists PR | https://github.com/ethereum-lists/chains/pull/8519 (still open) |
 
