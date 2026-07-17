@@ -25,12 +25,13 @@ Use these links when an exchange or partner asks for testnet source, genesis, pe
 ## Peer / bootnode (copy-paste)
 
 ```
-enode://9ad0e0211881c099f4fe35b524368a1629b763b2b8d205848a8c7105aff412d39a965c3e63035dd2de44b59345c57535bf387546556ebd1370c0dcefb8600804@168.144.69.102:30313
+enode://f762fd2f93af7d072aa497fab66e5e54800b9de96becd13b79378d2b89b6e567c6d703cf16a977e4463205b373c1b86b241c860a1d609405139f340938b96112@168.144.69.102:30313
 ```
 
 - **P2P port:** `30313` TCP + UDP (mapped; does not conflict with mainnet `30303`)  
 - **Host:** `168.144.69.102`  
 - Place `static-nodes.json` under the node’s datadir `geth/` folder, or pass via bootnodes.
+- Always use the enode from GitHub `static-nodes.json` (node ID can change after a wipe if not pinned).
 
 ## Node OS & client requirements
 
