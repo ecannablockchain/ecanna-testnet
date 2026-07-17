@@ -21,6 +21,9 @@ Use these links when an exchange or partner asks for testnet source, genesis, pe
 | **Faucet** | https://testnetexplorer.ecnascan.com/faucet |
 | **Website** | https://ecnascan.com |
 | **Chainlist** | https://chainlist.org/?search=4112&testnets=true |
+| **Genesis hash (block 0)** | `0x75a3446929625d15d01857be62f5ab10abde0ad01311a37664d4ccc27fbde3a6` |
+
+> **Obsolete enode (do not use):** any peer ID starting with `9ad0e0…`. Always use GitHub `static-nodes.json`.
 
 ## Peer / bootnode (copy-paste)
 
