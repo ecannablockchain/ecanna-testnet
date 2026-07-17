@@ -1,49 +1,76 @@
-# Exchange / partner listing pack — E Canna Mainnet
+# Exchange / partner listing pack — E Canna Testnet
 
-**Network:** E Canna Mainnet · **Chain ID:** `4111` · **Symbol:** `ECNA`  
-**GitHub (public source):** https://github.com/ecannablockchain/ecanna-mainnet  
+**Network:** E Canna Testnet · **Chain ID:** `4112` · **Symbol:** `tECNA`  
+**GitHub (public source):** https://github.com/ecannablockchain/ecanna-testnet  
 
-Use these links when an exchange asks for source, genesis, peers, and Geth build.
+Use these links when an exchange or partner asks for testnet source, genesis, peers, and Geth build.
 
 | What they ask | Link / value |
 |---------------|----------------|
-| **GitHub source** | https://github.com/ecannablockchain/ecanna-mainnet |
-| **genesis.json** | https://github.com/ecannablockchain/ecanna-mainnet/blob/main/ecnachain/genesis.json |
-| **static-nodes.json** (peer nodes) | https://github.com/ecannablockchain/ecanna-mainnet/blob/main/ecnachain/static-nodes.json |
-| **Raw genesis** | https://raw.githubusercontent.com/ecannablockchain/ecanna-mainnet/main/ecnachain/genesis.json |
-| **Raw static-nodes** | https://raw.githubusercontent.com/ecannablockchain/ecanna-mainnet/main/ecnachain/static-nodes.json |
-| **Docker / Geth image (compiled client)** | `ethereum/client-go:v1.13.15` — see [docker-compose.yml](../ecnachain/docker-compose.yml) |
+| **GitHub source** | https://github.com/ecannablockchain/ecanna-testnet |
+| **genesis.json** | https://github.com/ecannablockchain/ecanna-testnet/blob/main/ecnachain/genesis.json |
+| **static-nodes.json** (peer nodes) | https://github.com/ecannablockchain/ecanna-testnet/blob/main/ecnachain/static-nodes.json |
+| **Raw genesis** | https://raw.githubusercontent.com/ecannablockchain/ecanna-testnet/main/ecnachain/genesis.json |
+| **Raw static-nodes** | https://raw.githubusercontent.com/ecannablockchain/ecanna-testnet/main/ecnachain/static-nodes.json |
+| **Docker / Geth image (compiled client)** | `ethereum/client-go:v1.13.15` — see `ecnachain/docker-compose.yml` |
 | **Geth version (live)** | `1.13.15-stable` (commit `c5ba367e…`) |
-| **Public RPC** | https://rpc.ecnascan.com |
-| **Explorer** | https://explorer.ecnascan.com |
+| **Ubuntu (live production)** | **24.04 LTS** (also tested with **22.04 LTS** + Docker) |
+| **Public RPC** | https://testnetrpc.ecnascan.com |
+| **Explorer** | https://testnetexplorer.ecnascan.com |
+| **API** | https://testnetapi.ecnascan.com |
+| **Faucet** | https://testnetexplorer.ecnascan.com/faucet |
 | **Website** | https://ecnascan.com |
-| **Chainlist** | https://chainlist.org/?search=4111 |
+| **Chainlist** | https://chainlist.org/?search=4112&testnets=true |
 
 ## Peer / bootnode (copy-paste)
 
 ```
-enode://e11f51bdb2bafcd774fe1a9a79860995892535792386319928c9a83a6f775c61cc57ca0a2682adab3e55201a5d787b1158958e7d0451c1d7c37aea50443e9d4b@168.144.69.102:30303
+enode://9ad0e0211881c099f4fe35b524368a1629b763b2b8d205848a8c7105aff412d39a965c3e63035dd2de44b59345c57535bf387546556ebd1370c0dcefb8600804@168.144.69.102:30313
 ```
 
-- **P2P port:** `30303` TCP + UDP  
+- **P2P port:** `30313` TCP + UDP (mapped; does not conflict with mainnet `30303`)  
 - **Host:** `168.144.69.102`  
-- Place `static-nodes.json` under the node’s datadir `geth/` folder (Geth standard), or pass via bootnodes.
+- Place `static-nodes.json` under the node’s datadir `geth/` folder, or pass via bootnodes.
 
-## How to sync a full node (short)
+## Node OS & client requirements
 
-1. Install/run Geth **v1.13.15** (or use Docker image above).  
-2. `geth init --datadir ./data genesis.json` using the raw genesis link.  
+Same as mainnet: **Ubuntu 24.04 LTS** (live) or **22.04 LTS**, **Geth v1.13.15-stable**, `amd64`, Docker optional, EVM **london** (no Shanghai — stock Geth Clique), sync `full` + `gcmode archive`.  
+See [`docs/EXCHANGE-LISTING.md`](./EXCHANGE-LISTING.md) for the full table.
+
+## Geth start command (sync-only full node)
+
+```bash
+geth \
+  --datadir ./data \
+  --networkid 4112 \
+  --syncmode full \
+  --gcmode archive \
+  --http \
+  --http.addr "127.0.0.1" \
+  --http.port "8545" \
+  --http.api "eth,net,web3,txpool" \
+  --ws \
+  --ws.addr "127.0.0.1" \
+  --ws.port "8546" \
+  --ws.api "eth,net,web3" \
+  --port 30313 \
+  --discovery.port 30313 \
+  --nat any
+```
+
+Public RPC for testnet wallets: **https://testnetrpc.ecnascan.com**. Do **not** expose `debug` / `admin` / `db` on a public HTTP listener.
+
+## How to sync a testnet full node (short)
+
+1. Run Geth **v1.13.15** on **Ubuntu 22.04/24.04** (or Docker image above).  
+2. `geth init --datadir ./data` with the raw genesis.  
 3. Copy `static-nodes.json` into `./data/geth/static-nodes.json`.  
-4. Start Geth with networkid **4111**, P2P **30303** open to this peer.  
-5. Optional HTTP RPC for the exchange’s indexer only — do **not** expose unlocked accounts.
+4. Start with networkid **4112**, P2P open to peer on **30313**.  
 
-Compose reference: `ecnachain/docker-compose.yml` + `ecnachain/docker-compose.fullnode.yml`.
+## Mainnet companion
 
-## Testnet (optional)
-
-Private companion repo: https://github.com/ecannablockchain/ecanna-testnet (chain ID **4112** / tECNA).  
-Make public only if the exchange also needs testnet.
+https://github.com/ecannablockchain/ecanna-mainnet (chain ID **4111** / ECNA) · [`docs/EXCHANGE-LISTING.md`](./EXCHANGE-LISTING.md)
 
 ## Do not send exchanges
 
-Private keys, miner hex, faucet keys, SSH passwords, SQL credentials, or server `.env` files.
+Private keys, miner/faucet hex, SSH passwords, SQL credentials, or server `.env` files.
